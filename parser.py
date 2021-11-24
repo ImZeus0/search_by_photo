@@ -1,9 +1,8 @@
 import re
 import requests
+import os
 from PIL import Image
 from selenium import webdriver
-
-DOWNLOAD_FOLDER = '/home/ubuntu/PycharmProjects/search_by_photo/downloads'
 
 class Browser():
 
@@ -38,10 +37,10 @@ class Browser():
                         res.append(url)
         return res
 
-    def download_image(self,url,name):
+    def download_image(self,url,name,folder):
         img = requests.get(url,verify=False)
         type_file = url.split('.')[-1]
-        path = f'{DOWNLOAD_FOLDER}/{name}.{type_file}'
+        path = f'{folder}/{name}.{type_file}'
         img_file = open(path, 'wb')
         img_file.write(img.content)
         self.resize_image(path)
@@ -51,11 +50,6 @@ class Browser():
         size = (1000,500)
         original_image = Image.open(image_path)
         width, height = original_image.size
-        print('The original image size is {wide} wide x {height} '
-              'high'.format(wide=width, height=height))
-
         resized_image = original_image.resize(size)
         width, height = resized_image.size
-        print('The resized image size is {wide} wide x {height} '
-              'high'.format(wide=width, height=height))
         resized_image.save(image_path)

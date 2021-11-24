@@ -3,7 +3,11 @@ from parser import Browser
 
 
 PATH_PHOTO = os.path.abspath('photo.jpg')
-
+DOWNLOAD_FOLDER = os.getcwd()+'/downloads'
+if os.path.exists(DOWNLOAD_FOLDER):
+    pass
+else:
+    os.mkdir('downloads')
 
 
 
@@ -14,7 +18,7 @@ if __name__ == '__main__':
     urls = browser.urls_photo(page)
     count = 0
     for url in urls:
-        browser.download_image(url,f'{count}')
+        browser.download_image(url,f'{count}',DOWNLOAD_FOLDER)
         count+=1
 
 
